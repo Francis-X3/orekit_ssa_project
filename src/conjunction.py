@@ -14,6 +14,8 @@ TODO(you): implement find_closest_approach() using propagate_object() from propa
 import math
 from propagate import propagate_object
 from setup_check import fetch_tles, DEBRIS_URL
+from org.orekit.propagation.analytical.tle import TLE , TLEPropagator
+from org.orekit.frames import FramesFactory
 
 
 def distance_km(pos_a, pos_b):
@@ -39,8 +41,22 @@ def find_closest_approach(tle_a, tle_b, duration_hours=72, step_minutes=1):
     opposed to the analytical/optimization-based approach real SSA systems use) — worth
     understanding as a limitation, not hiding it.
     """
-    raise NotImplementedError("Your turn — see the docstring above")
-
+    results_A = propagate_object(tle_a[0], tle_a[1], duration_hours, step_minutes)
+    results_B = propagate_object(tle_b[0], tle_b[1], duration_hours, step_minutes)
+    min_distance = float("inf")
+    min_distance_time = None
+    
+                                                                   
+    for sample_a, sample_b in zip(results_A, results_B):
+        dist = distance_km(sample_a["position_km"], sample_b["position_km"])
+        if dist < min_distance:
+            min_distance = dist
+            min_distance_time = sample_a["t_seconds"]
+    return {
+        "min_distance_km": min_distance,
+        "time_seconds": min_distance_time,
+        "time_readable":f"{min_distance_time/3600:.2f} hours",}
+    
 
 def classify_risk(min_distance_km):
     """
