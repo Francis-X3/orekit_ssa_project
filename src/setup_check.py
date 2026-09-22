@@ -15,7 +15,8 @@ import requests
 CELESTRAK_URL = "https://celestrak.org/NORAD/elements/gp.php?GROUP=active&FORMAT=tle"
 # Smaller, easier group to start with while you're learning:
 DEBRIS_URL = "https://celestrak.org/NORAD/elements/gp.php?GROUP=cosmos-1408-debris&FORMAT=tle"
-
+ISS_URL = "https://celestrak.org/NORAD/elements/gp.php?CATNR=25544&FORMAT=tle"
+HUBBLE_URL = "https://celestrak.org/NORAD/elements/gp.php?CATNR=20580&FORMAT=tle"
 
 def fetch_tles(url):
     """
@@ -26,7 +27,7 @@ def fetch_tles(url):
     you can be asked "where did this orbit come from?" and have a real answer.
     """
     headers = {"User-Agent": "Mozilla/5.0"}
-    resp = requests.get(url, headers=headers, timeout=15)
+    resp = requests.get(url, headers=headers, timeout=30)
     resp.raise_for_status()
     lines = [l for l in resp.text.splitlines() if l.strip()]
     # TLE format: every object is 3 lines — name, line 1, line 2

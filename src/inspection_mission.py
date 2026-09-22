@@ -33,6 +33,28 @@ def circular_velocity(r_km):
 
 
 def hohmann_transfer(alt1_km, alt2_km):
+    radius_lower_orbit = RE + alt1_km
+    radius_higher_orbit = RE + alt2_km
+    v_lower_orbit = circular_velocity(radius_lower_orbit)
+    v_higher_orbit = circular_velocity(radius_higher_orbit)
+    a_transfer_ellipse = (radius_lower_orbit + radius_higher_orbit) / 2
+#     speed using vis-viva
+    v_transfer_ellipse_1 = math.sqrt(MU * (2/radius_lower_orbit - 1/a_transfer_ellipse))
+    v_transfer_ellipse_2 = math.sqrt(MU * (2/radius_higher_orbit - 1/a_transfer_ellipse))
+#     delta-v for burns
+    dv1 = v_transfer_ellipse_1 - v_lower_orbit
+    dv2 = v_higher_orbit - v_transfer_ellipse_2
+    print(radius_lower_orbit, radius_higher_orbit)
+    print(v_lower_orbit, v_higher_orbit)
+    print(v_transfer_ellipse_1, v_transfer_ellipse_2)
+    print(dv1, dv2)
+    transfer_time = math.pi * math.sqrt(a_transfer_ellipse**3 / MU)
+    return {
+        "dv1_kms": dv1,
+        "dv2_kms": dv2,
+        "total_dv_kms": abs(dv1) + abs(dv2),
+        "transfer_time_hours": transfer_time / 3600
+    }
     """
     Compute the two burns of a Hohmann transfer between two circular orbits.
 
@@ -55,11 +77,14 @@ def hohmann_transfer(alt1_km, alt2_km):
     ~0.14 km/s per burn, ~0.28 km/s total, and take a bit under an hour. If you're wildly off,
     check your units (km vs m) before anything else — this is the #1 bug source here.
     """
-    raise NotImplementedError("Derive and implement using the steps above")
 
 
 if __name__ == "__main__":
+    alt1 = float(input("Enter starting orbit altitude (km): "))
+    alt2 = float(input("Enter target orbit altitude (km): "))
     # Example: chaser in a 400km parking orbit, target object (debris) at 1200km
-    result = hohmann_transfer(alt1_km=400, alt2_km=1200)
-    print("Hohmann transfer, 400km -> 1200km:")
-    print(result)
+    result = hohmann_transfer(alt1_km=alt1, alt2_km=alt2)
+    print(f"burn 1 delta-v: {result['dv1_kms']:.3f} km/s")
+    print(f"burn 2 delta-v: {result['dv2_kms']:.3f} km/s")
+    print(f"total delta-v: {result['total_dv_kms']:.3f} km/s")
+    print(f"transfer time: {result['transfer_time_hours']:.3f} hours")
