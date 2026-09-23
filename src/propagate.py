@@ -38,11 +38,10 @@ def propagate_object(tle_line1, tle_line2, duration_hours=24, step_minutes=5):
     propagate in an Earth-fixed frame you'll get nonsense — orbital mechanics equations of motion
     are derived in an inertial (non-rotating) frame. This trips up almost everyone the first time.
     """
-    tle=(TLE(tle_line1, tle_line2))
+    tle = TLE(tle_line1, tle_line2)
     propagator = TLEPropagator.selectExtrapolator(tle)
     start_date = tle.getDate()
-    
-    later_date = start_date.shiftedBy(300.0)
+
     results = []
     t=0
     while t <= duration_hours * 3600:

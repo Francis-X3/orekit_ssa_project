@@ -13,9 +13,7 @@ TODO(you): implement find_closest_approach() using propagate_object() from propa
 
 import math
 from propagate import propagate_object
-from setup_check import fetch_tles, ISS_URL, HUBBLE_URL# DEBRIS_URL
-from org.orekit.propagation.analytical.tle import TLE , TLEPropagator
-from org.orekit.frames import FramesFactory
+from setup_check import fetch_tles, ISS_URL, HUBBLE_URL
 
 
 def distance_km(pos_a, pos_b):
@@ -82,16 +80,3 @@ if __name__ == "__main__":
     )
     print(result)
     print("Risk bucket:", classify_risk(result["min_distance_km"]))
-    # objs = fetch_tles(DEBRIS_URL)
-    # if len(objs) < 2:
-    #     raise SystemExit("Need at least 2 objects in this TLE group to compare")
-
-    # a, b = objs[0], objs[1]
-    # print(f"Screening {a['name']} vs {b['name']}...")
-
-    # result = find_closest_approach(
-    #     (a["line1"], a["line2"]),
-    #     (b["line1"], b["line2"]),
-    # )
-    # print(result)
-    # print("Risk bucket:", classify_risk(result["min_distance_km"]))
