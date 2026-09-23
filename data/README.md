@@ -28,3 +28,6 @@ python src/setup_check.py   # downloads orekit-data.zip and confirms it loads
 The JD names STK, Orekit, GMAT as accepted mission-analysis tools. STK and GMAT are GUI-first;
 Orekit is the one you can actually drive from Python and put in a GitHub repo as working code —
 that's what makes it a *demonstrable* skill rather than a claim on a resume.
+
+this is for the probability.py file 
+ This pipeline implements TLE-based conjunction screeing using SGP4 propogation , in order to test this an sample event of  Cosmos 2605 vs Starlink-32747 at epoch sep 22 11:03 UTC was tested . but publicly available TLE is low fidelitity than the tracking data produced by Leolabs, so the miss-distance predictions do not match real-time alerts especially over a day out.
