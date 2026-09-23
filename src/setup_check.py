@@ -17,6 +17,8 @@ CELESTRAK_URL = "https://celestrak.org/NORAD/elements/gp.php?GROUP=active&FORMAT
 DEBRIS_URL = "https://celestrak.org/NORAD/elements/gp.php?GROUP=cosmos-1408-debris&FORMAT=tle"
 ISS_URL = "https://celestrak.org/NORAD/elements/gp.php?CATNR=25544&FORMAT=tle"
 HUBBLE_URL = "https://celestrak.org/NORAD/elements/gp.php?CATNR=20580&FORMAT=tle"
+COSMOS_2605_URL = "https://celestrak.org/NORAD/elements/gp.php?CATNR=67679&FORMAT=tle"
+STARLINK_32747_URL= "https://celestrak.org/NORAD/elements/gp.php?NAME=STARLINK-32747&FORMAT=tle"
 
 def fetch_tles(url):
     """
